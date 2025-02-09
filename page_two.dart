@@ -244,7 +244,7 @@ class _PageTwoState extends State<PageTwo> {
       "title": "Project Management App",
       "description": "Streamline your team's workflow.",
       "category": "Productivity",
-      "upvotes": 0,
+      "upvotes": 3,
       "isUpvoted": false, // Flag to track whether the card is upvoted
     },
     {
@@ -252,7 +252,7 @@ class _PageTwoState extends State<PageTwo> {
       "title": "Mobile Game Concept",
       "description": "Innovative multiplayer strategy game.",
       "category": "Games",
-      "upvotes": 0,
+      "upvotes": 4,
       "isUpvoted": false,
     },
     {
@@ -320,12 +320,29 @@ class _PageTwoState extends State<PageTwo> {
       "isUpvoted": false,
     },
   ];
+@override
+void initState() {
+  super.initState();
+  // Sort cards initially by upvotes
+  sortCards();
+}
 
   // Function to dynamically adjust search bar width
   double getSearchBarWidth(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     return screenWidth * 0.4; // Makes the search bar 60% of screen width
   }
+
+  void sortCards() {
+    setState(() {
+      _dynamicCards.sort((a, b) => b["upvotes"].compareTo(a["upvotes"]));
+      // Update ranks after sorting
+      for (int i = 0; i < _dynamicCards.length; i++) {
+        _dynamicCards[i]["rank"] = i + 1;
+      }
+    });
+  }
+
 
   // Function to handle upvote and downvote actions dynamically
   void toggleVote(int index) {
@@ -336,11 +353,7 @@ class _PageTwoState extends State<PageTwo> {
         _dynamicCards[index]["upvotes"]++;
       }
       _dynamicCards[index]["isUpvoted"] = !_dynamicCards[index]["isUpvoted"];
-      _dynamicCards.sort((a, b) => b["upvotes"].compareTo(a["upvotes"]));
-
-      for (int i = 0; i < _dynamicCards.length; i++) {
-        _dynamicCards[i]["rank"] = i + 1;
-      }
+      sortCards(); // Call sorting function after vote change
     });
   }
 
@@ -418,16 +431,52 @@ class _PageTwoState extends State<PageTwo> {
                     children: _categories.map((category) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 4),
-                        child: ChoiceChip(
-                          label: Text(category),
-                          selected: _selectedCategory == category,
-                          onSelected: (selected) {
-                            setState(() {
-                              _selectedCategory = selected ? category : '';
-                            });
-                          },
-                          selectedColor: Colors.blue,
-                          backgroundColor: Colors.grey.shade200,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            boxShadow: _selectedCategory == category
+                                ? [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.3),
+                                spreadRadius: 1,
+                                blurRadius: 6,
+                                offset: const Offset(0, 3),
+                              ),
+                            ]
+                                : [],
+                          ),
+                          child: ChoiceChip(
+                            label: Text(
+                              category,
+                              style: TextStyle(
+                                color: _selectedCategory == category
+                                    ? Colors.white
+                                    : Colors.black87,
+                                fontWeight: _selectedCategory == category
+                                    ? FontWeight.bold
+                                    : FontWeight.normal,
+                              ),
+                            ),
+                            selected: _selectedCategory == category,
+                            onSelected: (selected) {
+                              setState(() {
+                                _selectedCategory = selected ? category : '';
+                              });
+                            },
+                            selectedColor: const Color(0xFF2C2C2C),
+                            backgroundColor: Colors.grey.shade100,
+                            elevation: _selectedCategory == category ? 0 : 1,
+                            pressElevation: 2,
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              side: BorderSide(
+                                color: _selectedCategory == category
+                                    ? Colors.transparent
+                                    : Colors.grey.shade300,
+                                width: 1,
+                              ),
+                            ),
+                          ),
                         ),
                       );
                     }).toList(),
@@ -439,6 +488,7 @@ class _PageTwoState extends State<PageTwo> {
                     child: ListView.builder(
                       itemCount: getFilteredCards().length,
                       itemBuilder: (context, index) {
+                        final card = getFilteredCards()[index];
                         return Card(
                           elevation: 4,
                           shape: RoundedRectangleBorder(
@@ -448,47 +498,92 @@ class _PageTwoState extends State<PageTwo> {
                             padding: const EdgeInsets.all(12),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  getFilteredCards()[index]['title']!,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            card['title']!,
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 4),
+                                          Chip(
+                                            label: Text(
+                                              card['category']!,
+                                              style: const TextStyle(
+                                                fontSize: 10,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            backgroundColor: Colors.black,
+                                            padding: EdgeInsets.zero,
+                                            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    LayoutBuilder(
+                                      builder: (context, constraints) {
+                                        final size = constraints.maxWidth > 600 ? 48.0 : 40.0;
+
+                                        return Container(
+                                          width: size,
+                                          height: size,
+                                          decoration: BoxDecoration(
+                                            color: Colors.black,
+                                            borderRadius: BorderRadius.circular(size * 0.2),
+                                          ),
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              IconButton(
+                                                padding: EdgeInsets.zero,
+                                                constraints: BoxConstraints(
+                                                  minWidth: size * 0.6,
+                                                  minHeight: size * 0.6,
+                                                ),
+                                                icon: AnimatedSwitcher(
+                                                  duration: const Duration(milliseconds: 300),
+                                                  transitionBuilder: (Widget child, Animation<double> animation) {
+                                                    return ScaleTransition(scale: animation, child: child);
+                                                  },
+                                                  child: Icon(
+                                                    card["isUpvoted"] ? Icons.rocket_launch : Icons.rocket_launch_outlined,
+                                                    key: ValueKey<bool>(card["isUpvoted"]),
+                                                    color: card["isUpvoted"] ? Colors.green : Colors.white,
+                                                    size: size * 0.4,
+                                                  ),
+                                                ),
+                                                onPressed: () => toggleVote(index),
+                                              ),
+                                              Text(
+                                                "${card["upvotes"]}",
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: size * 0.25,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    )
+                                  ],
                                 ),
                                 const SizedBox(height: 8),
                                 Text(
-                                  getFilteredCards()[index]['description']!,
+                                  card['description']!,
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(fontSize: 12),
-                                ),
-                                Align(
-                                  alignment: Alignment.bottomRight,
-                                  child: Chip(
-                                    label: Text(
-                                      getFilteredCards()[index]['category']!,
-                                      style: const TextStyle(fontSize: 10),
-                                    ),
-                                    backgroundColor: Colors.black,
-                                    labelStyle: const TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                                IconButton(
-                                  icon: Icon(
-                                    getFilteredCards()[index]["isUpvoted"]
-                                        ? Icons.arrow_drop_up
-                                        : Icons.arrow_upward,
-                                    color: getFilteredCards()[index]["isUpvoted"]
-                                        ? Colors.blue
-                                        : Colors.black,
-                                  ),
-                                  onPressed: () => toggleVote(index),
-                                ),
-                                Text(
-                                  "${getFilteredCards()[index]["upvotes"]} Upvotes",
-                                  style: const TextStyle(fontWeight: FontWeight.bold),
                                 ),
                               ],
                             ),
