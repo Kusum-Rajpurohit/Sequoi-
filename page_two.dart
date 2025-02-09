@@ -1,223 +1,14 @@
-// import 'package:flutter/material.dart';
-// import 'page_three.dart';
-//
-// class PageTwo extends StatefulWidget {
-//   const PageTwo({Key? key}) : super(key: key);
-//
-//   @override
-//   _PageTwoState createState() => _PageTwoState();
-// }
-//
-// class _PageTwoState extends State<PageTwo> {
-//   final TextEditingController _searchController = TextEditingController();
-//   final List<String> _categories = [
-//     "Productivity", "Games", "Ecommerce", "Social Media", "Web3"
-//   ];
-//
-//   final List<Map<String, String>> _dynamicCards = [
-//     {
-//       "title": "Project Management App",
-//       "description": "Streamline your team's workflow.",
-//       "category": "Productivity"
-//     },
-//     {
-//       "title": "Mobile Game Concept",
-//       "description": "Innovative multiplayer strategy game.",
-//       "category": "Games"
-//     },
-//     {
-//       "title": "E-commerce Platform",
-//       "description": "Next-generation online marketplace.",
-//       "category": "Ecommerce"
-//     },
-//     {
-//       "title": "Social Networking App",
-//       "description": "Connect with friends and share moments.",
-//       "category": "Social Media"
-//     },
-//     {
-//       "title": "Task Tracker Pro",
-//       "description": "Keep track of your daily tasks and deadlines effortlessly.",
-//       "category": "Productivity"
-//     },
-//     {
-//       "title": "Adventure Quest",
-//       "description": "Embark on epic adventures and conquer exciting challenges.",
-//       "category": "Games"
-//     },
-//     {
-//       "title": "ShopSmart",
-//       "description": "An all-in-one platform for seamless online shopping.",
-//       "category": "Ecommerce"
-//     },
-//     {
-//       "title": "ChatterHub",
-//       "description": "Connect with friends and share moments instantly.",
-//       "category": "Social media"
-//     },
-//     {
-//       "title": "CryptoVault",
-//       "description": "Secure and manage your crypto assets with ease.",
-//       "category": "Web3"
-//     },
-//     {
-//       "title": "TeamSync",
-//       "description": "Collaborate with your team and improve project efficiency.",
-//       "category": "Productivity"
-//     },
-//   ];
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return LayoutBuilder(
-//       builder: (context, constraints) {
-//         bool isWideScreen = constraints.maxWidth > 600;
-//
-//         return Scaffold(
-//           drawer: Drawer(
-//             child: ListView(
-//               children: [
-//                 const DrawerHeader(
-//                   decoration: BoxDecoration(color: Colors.black),
-//                   child: Text(
-//                     'Menu',
-//                     style: TextStyle(color: Colors.white, fontSize: 24),
-//                   ),
-//                 ),
-//                 ListTile(
-//                   title: const Text('Option 1'),
-//                   onTap: () => Navigator.pop(context),
-//                 ),
-//                 ListTile(
-//                   title: const Text('Option 2'),
-//                   onTap: () => Navigator.pop(context),
-//                 ),
-//               ],
-//             ),
-//           ),
-//           appBar: AppBar(
-//             title: TextField(
-//               controller: _searchController,
-//               decoration: InputDecoration(
-//                 hintText: 'Search...',
-//                 filled: true,
-//                 fillColor: Colors.white,
-//                 border: OutlineInputBorder(
-//                   borderRadius: BorderRadius.circular(10),
-//                   borderSide: BorderSide.none,
-//                 ),
-//                 prefixIcon: const Icon(Icons.search),
-//               ),
-//             ),
-//           ),
-//           body: SafeArea(
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 // Horizontal Scrollable Chips
-//                 SingleChildScrollView(
-//                   scrollDirection: Axis.horizontal,
-//                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
-//                   child: Row(
-//                     children: _categories.map((category) {
-//                       return Padding(
-//                         padding: const EdgeInsets.symmetric(horizontal: 4),
-//                         child: Chip(
-//                           label: Text(category),
-//                           backgroundColor: Colors.black,
-//                           labelStyle: const TextStyle(color: Colors.white),
-//                         ),
-//                       );
-//                     }).toList(),
-//                   ),
-//                 ),
-//
-//                 // Responsive Grid/List of Cards
-//                 Expanded(
-//                   child: Padding(
-//                     padding: const EdgeInsets.all(8.0),
-//                     child: GridView.builder(
-//                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-//                         crossAxisCount: isWideScreen ? 3 : 2,
-//                         childAspectRatio: 0.8,
-//                         crossAxisSpacing: 10,
-//                         mainAxisSpacing: 10,
-//                       ),
-//                       itemCount: _dynamicCards.length,
-//                       itemBuilder: (context, index) {
-//                         return Card(
-//                           elevation: 4,
-//                           shape: RoundedRectangleBorder(
-//                             borderRadius: BorderRadius.circular(12),
-//                           ),
-//                           child: Padding(
-//                             padding: const EdgeInsets.all(12),
-//                             child: Column(
-//                               crossAxisAlignment: CrossAxisAlignment.start,
-//                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                               children: [
-//                                 Text(
-//                                   _dynamicCards[index]['title']!,
-//                                   style: const TextStyle(
-//                                     fontSize: 16,
-//                                     fontWeight: FontWeight.bold,
-//                                   ),
-//                                 ),
-//                                 const SizedBox(height: 8),
-//                                 Text(
-//                                   _dynamicCards[index]['description']!,
-//                                   maxLines: 2,
-//                                   overflow: TextOverflow.ellipsis,
-//                                   style: const TextStyle(fontSize: 12),
-//                                 ),
-//                                 Align(
-//                                   alignment: Alignment.bottomRight,
-//                                   child: Chip(
-//                                     label: Text(
-//                                       _dynamicCards[index]['category']!,
-//                                       style: const TextStyle(fontSize: 10),
-//                                     ),
-//                                     backgroundColor: Colors.black,
-//                                     labelStyle: const TextStyle(color: Colors.white),
-//                                   ),
-//                                 ),
-//                               ],
-//                             ),
-//                           ),
-//                         );
-//                       },
-//                     ),
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           ),
-//           bottomNavigationBar: BottomAppBar(
-//             child: Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//               children: [
-//                 IconButton(
-//                   icon: const Icon(Icons.arrow_back),
-//                   onPressed: () => Navigator.pop(context),
-//                 ),
-//                 IconButton(
-//                   icon: const Icon(Icons.arrow_forward),
-//                   onPressed: () => Navigator.push(
-//                     context,
-//                     MaterialPageRoute(builder: (context) => const PageThree()),
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           ),
-//         );
-//       },
-//     );
-//   }
-// }
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'page_three.dart';
-import 'page_four.dart'; // Import page_five.dart
+import 'page_four.dart';
+
+const kPrimaryColor = Color(0xFF2196F3); // Vibrant yet calming blue
+const kBackgroundColor = Color(0xFF121212); // Dark charcoal for contrast
+const kCardBackgroundColor = Color(0xFF1E1E1E); // Soft dark gray for depth
+const kTextColor = Color(0xFFEAEAEA); // Off-white for readability
+const kSecondaryTextColor = Color(0xFFB0B0B0); // Subtle gray for balance
+const kBorderColor = Color(0xFF2C2C2C); // Gentle borders
 
 class PageTwo extends StatefulWidget {
   const PageTwo({Key? key}) : super(key: key);
@@ -236,7 +27,7 @@ class _PageTwoState extends State<PageTwo> {
     "Web3"
   ];
 
-  String _selectedCategory = ''; // Variable to store selected category
+  String _selectedCategory = '';
 
   final List<Map<String, dynamic>> _dynamicCards = [
     {
@@ -245,7 +36,11 @@ class _PageTwoState extends State<PageTwo> {
       "description": "Streamline your team's workflow.",
       "category": "Productivity",
       "upvotes": 3,
-      "isUpvoted": false, // Flag to track whether the card is upvoted
+      "isUpvoted": false,
+      "image": "https://plus.unsplash.com/premium_photo-1661914978519-52a11fe159a7?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "creator": "AliceDev",
+      "funds": 500,
+      "position": 5,
     },
     {
       "rank": 2,
@@ -254,6 +49,10 @@ class _PageTwoState extends State<PageTwo> {
       "category": "Games",
       "upvotes": 4,
       "isUpvoted": false,
+      "image": "https://images.unsplash.com/photo-1633409361618-c73427e4e206?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "creator": "GameMaker99",
+      "funds": 300,
+      "position": 3,
     },
     {
       "rank": 3,
@@ -262,6 +61,10 @@ class _PageTwoState extends State<PageTwo> {
       "category": "Ecommerce",
       "upvotes": 0,
       "isUpvoted": false,
+      "image": "https://plus.unsplash.com/premium_vector-1726930891962-b337f61cb814?q=80&w=2130&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "creator": "ShopSmartTeam",
+      "funds": 1000,
+      "position": 1,
     },
     {
       "rank": 4,
@@ -270,6 +73,10 @@ class _PageTwoState extends State<PageTwo> {
       "category": "Social Media",
       "upvotes": 0,
       "isUpvoted": false,
+      "image": "https://plus.unsplash.com/premium_photo-1722176809011-7e5677562960?q=80&w=1984&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "creator": "SocialConnect",
+      "funds": 200,
+      "position": 4,
     },
     {
       "rank": 5,
@@ -278,6 +85,10 @@ class _PageTwoState extends State<PageTwo> {
       "category": "Productivity",
       "upvotes": 0,
       "isUpvoted": false,
+      "image": "https://example.com/images/task_tracker_pro.png",
+      "creator": "TaskMaster",
+      "funds": 150,
+      "position": 6,
     },
     {
       "rank": 6,
@@ -286,6 +97,10 @@ class _PageTwoState extends State<PageTwo> {
       "category": "Games",
       "upvotes": 0,
       "isUpvoted": false,
+      "image": "https://example.com/images/adventure_quest.png",
+      "creator": "QuestCreator",
+      "funds": 400,
+      "position": 2,
     },
     {
       "rank": 7,
@@ -294,6 +109,10 @@ class _PageTwoState extends State<PageTwo> {
       "category": "Ecommerce",
       "upvotes": 0,
       "isUpvoted": false,
+      "image": "https://i.pinimg.com/736x/b4/84/b0/b484b028e6e065fe7e82ed2b2f503584.jpg",
+      "creator": "InnovateShop",
+      "funds": 600,
+      "position": 7,
     },
     {
       "rank": 8,
@@ -302,6 +121,10 @@ class _PageTwoState extends State<PageTwo> {
       "category": "Social Media",
       "upvotes": 0,
       "isUpvoted": false,
+      "image": "https://example.com/images/chatterhub.png",
+      "creator": "ChatTeam",
+      "funds": 250,
+      "position": 8,
     },
     {
       "rank": 9,
@@ -310,6 +133,10 @@ class _PageTwoState extends State<PageTwo> {
       "category": "Web3",
       "upvotes": 0,
       "isUpvoted": false,
+      "image": "https://example.com/images/crypto_vault.png",
+      "creator": "CryptoSecure",
+      "funds": 700,
+      "position": 9,
     },
     {
       "rank": 10,
@@ -318,33 +145,33 @@ class _PageTwoState extends State<PageTwo> {
       "category": "Productivity",
       "upvotes": 0,
       "isUpvoted": false,
+      "image": "https://example.com/images/team_sync.png",
+      "creator": "CollabTeam",
+      "funds": 350,
+      "position": 10,
     },
   ];
-@override
-void initState() {
-  super.initState();
-  // Sort cards initially by upvotes
-  sortCards();
-}
 
-  // Function to dynamically adjust search bar width
+  @override
+  void initState() {
+    super.initState();
+    sortCards();
+  }
+
   double getSearchBarWidth(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    return screenWidth * 0.4; // Makes the search bar 60% of screen width
+    return screenWidth * 0.4;
   }
 
   void sortCards() {
     setState(() {
       _dynamicCards.sort((a, b) => b["upvotes"].compareTo(a["upvotes"]));
-      // Update ranks after sorting
       for (int i = 0; i < _dynamicCards.length; i++) {
         _dynamicCards[i]["rank"] = i + 1;
       }
     });
   }
 
-
-  // Function to handle upvote and downvote actions dynamically
   void toggleVote(int index) {
     setState(() {
       if (_dynamicCards[index]["isUpvoted"]) {
@@ -353,11 +180,10 @@ void initState() {
         _dynamicCards[index]["upvotes"]++;
       }
       _dynamicCards[index]["isUpvoted"] = !_dynamicCards[index]["isUpvoted"];
-      sortCards(); // Call sorting function after vote change
+      sortCards();
     });
   }
 
-  // Function to get filtered cards based on selected category
   List<Map<String, dynamic>> getFilteredCards() {
     if (_selectedCategory.isEmpty) {
       return _dynamicCards;
@@ -375,47 +201,77 @@ void initState() {
         bool isWideScreen = constraints.maxWidth > 600;
 
         return Scaffold(
+          backgroundColor: kBackgroundColor,
           drawer: Drawer(
-            child: ListView(
-              children: [
-                const DrawerHeader(
-                  decoration: BoxDecoration(color: Colors.black),
-                  child: Text(
-                    'Menu',
-                    style: TextStyle(color: Colors.white, fontSize: 24),
+            child: Container(
+              color: kCardBackgroundColor,
+              child: ListView(
+                children: [
+                  DrawerHeader(
+                    decoration: BoxDecoration(
+                      color: kPrimaryColor,
+                      gradient: LinearGradient(
+                        colors: [
+                          kPrimaryColor,
+                          kPrimaryColor.withOpacity(0.7),
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                    ),
+                    child: const Text(
+                      'Menu',
+                      style: TextStyle(color: kTextColor, fontSize: 24),
+                    ),
                   ),
-                ),
-                ListTile(
-                  title: const Text('Profile'),
-                  onTap: () {
-                    // Navigate to page_four.dart when "Profile" is clicked
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const PageFour()),
-                    );
-                  },
-                ),
-                ListTile(
-                  title: const Text('Option 2'),
-                  onTap: () => Navigator.pop(context),
-                ),
-              ],
+                  ListTile(
+                    title: const Text(
+                      'Profile',
+                      style: TextStyle(color: kTextColor),
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const PageFour()),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: const Text(
+                      'Option 2',
+                      style: TextStyle(color: kTextColor),
+                    ),
+                    onTap: () => Navigator.pop(context),
+                  ),
+                ],
+              ),
             ),
           ),
           appBar: AppBar(
+            backgroundColor: kCardBackgroundColor,
+            elevation: 0,
             title: Container(
               width: getSearchBarWidth(context),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                color: Colors.white.withOpacity(0.1),
+              ),
               child: TextField(
                 controller: _searchController,
+                style: const TextStyle(color: kTextColor),
                 decoration: InputDecoration(
-                  hintText: 'Search...',
+                  hintText: 'Search items...',
+                  hintStyle: TextStyle(color: kTextColor.withOpacity(0.5)),
                   filled: true,
-                  fillColor: Colors.white,
+                  fillColor: Colors.transparent,
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(25),
                     borderSide: BorderSide.none,
                   ),
-                  prefixIcon: const Icon(Icons.search),
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: kTextColor.withOpacity(0.5),
+                  ),
                 ),
               ),
             ),
@@ -436,7 +292,7 @@ void initState() {
                             boxShadow: _selectedCategory == category
                                 ? [
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.3),
+                                color: kPrimaryColor.withOpacity(0.3),
                                 spreadRadius: 1,
                                 blurRadius: 6,
                                 offset: const Offset(0, 3),
@@ -449,8 +305,8 @@ void initState() {
                               category,
                               style: TextStyle(
                                 color: _selectedCategory == category
-                                    ? Colors.white
-                                    : Colors.black87,
+                                    ? kTextColor
+                                    : kSecondaryTextColor,
                                 fontWeight: _selectedCategory == category
                                     ? FontWeight.bold
                                     : FontWeight.normal,
@@ -462,17 +318,18 @@ void initState() {
                                 _selectedCategory = selected ? category : '';
                               });
                             },
-                            selectedColor: const Color(0xFF2C2C2C),
-                            backgroundColor: Colors.grey.shade100,
+                            selectedColor: kPrimaryColor,
+                            backgroundColor: kCardBackgroundColor,
                             elevation: _selectedCategory == category ? 0 : 1,
                             pressElevation: 2,
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 8),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
                               side: BorderSide(
                                 color: _selectedCategory == category
                                     ? Colors.transparent
-                                    : Colors.grey.shade300,
+                                    : kPrimaryColor.withOpacity(0.3),
                                 width: 1,
                               ),
                             ),
@@ -485,109 +342,161 @@ void initState() {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: ListView.builder(
-                      itemCount: getFilteredCards().length,
-                      itemBuilder: (context, index) {
-                        final card = getFilteredCards()[index];
-                        return Card(
-                          elevation: 4,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        final cardWidth = 250.0;
+                        final crossAxisCount =
+                        (constraints.maxWidth / cardWidth).floor();
+                        final aspectRatio = 3 / 5;
+
+                        return GridView.builder(
+                          gridDelegate:
+                          SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: crossAxisCount,
+                            crossAxisSpacing: 12,
+                            mainAxisSpacing: 12,
+                            childAspectRatio: aspectRatio,
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(12),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Expanded(
+                          itemCount: getFilteredCards().length,
+                          itemBuilder: (context, index) {
+                            final card = getFilteredCards()[index];
+                            return Card(
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: kCardBackgroundColor,
+                                  border: Border.all(
+                                    color: kPrimaryColor.withOpacity(0.2),
+                                    width: 1,
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: kPrimaryColor.withOpacity(0.1),
+                                      blurRadius: 10,
+                                      spreadRadius: 2,
+                                      offset: const Offset(0, 4),
+                                    ),
+                                  ],
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: BackdropFilter(
+                                    filter:
+                                    ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16),
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                         children: [
+                                          Container(
+                                            height: 120,
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                              BorderRadius.circular(12),
+                                              image: DecorationImage(
+                                                image: NetworkImage("${card['image']}"),
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(height: 12),
                                           Text(
                                             card['title']!,
                                             style: const TextStyle(
-                                              fontSize: 16,
+                                              fontSize: 18,
                                               fontWeight: FontWeight.bold,
+                                              color: kTextColor,
                                             ),
                                           ),
                                           const SizedBox(height: 4),
-                                          Chip(
-                                            label: Text(
-                                              card['category']!,
-                                              style: const TextStyle(
-                                                fontSize: 10,
-                                                color: Colors.white,
-                                              ),
+                                          Text(
+                                            "By ${card['creator']!}",
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              color: kTextColor.withOpacity(0.9),
                                             ),
-                                            backgroundColor: Colors.black,
-                                            padding: EdgeInsets.zero,
-                                            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                          ),
+                                          const SizedBox(height: 8),
+                                          Text(
+                                            card['description']!,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              color: kTextColor.withOpacity(0.9),
+                                            ),
+                                          ),
+                                          const SizedBox(height: 12),
+                                          Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                            children: [
+                                                            GestureDetector(
+                                                            onTap: () => toggleVote(index), // Call the toggle function
+                                                  child: Container(
+                                                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.transparent, // Transparent background
+                                                      borderRadius: BorderRadius.circular(20),
+                                                      border: Border.all(
+                                                        color: Colors.white.withOpacity(0.5), // Light border
+                                                        width: 1,
+                                                      ),
+                                                    ),
+                                                    child: Row(
+                                                      mainAxisSize: MainAxisSize.min,
+                                                      children: [
+                                                        AnimatedSwitcher(
+                                                          duration: const Duration(milliseconds: 300),
+                                                          transitionBuilder: (Widget child, Animation<double> animation) {
+                                                            return ScaleTransition(scale: animation, child: child);
+                                                          },
+                                                          child: Icon(
+                                                            card["isUpvoted"] ? Icons.thumb_up : Icons.thumb_up_outlined,
+                                                            key: ValueKey<bool>(card["isUpvoted"]),
+                                                            color: card["isUpvoted"] ? Colors.green : Colors.white,
+                                                            size: 16,
+                                                          ),
+                                                        ),
+                                                        const SizedBox(width: 4),
+                                                        Text(
+                                                          "${card["upvotes"]}",
+                                                          style: TextStyle(
+                                                            fontSize: 14,
+                                                            fontWeight: FontWeight.bold,
+                                                            color: card["isUpvoted"] ? Colors.green : Colors.white,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              _buildStatItem(
+                                                icon: Icons.monetization_on,
+                                                value: "${card['funds']} XTZ",
+                                                label: "Funds Raised",
+                                              ),
+                                              _buildStatItem(
+                                                icon: Icons.leaderboard,
+                                                value: "#${card['position']}",
+                                                label: "Rank",
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
                                     ),
-                                    LayoutBuilder(
-                                      builder: (context, constraints) {
-                                        final size = constraints.maxWidth > 600 ? 48.0 : 40.0;
-
-                                        return Container(
-                                          width: size,
-                                          height: size,
-                                          decoration: BoxDecoration(
-                                            color: Colors.black,
-                                            borderRadius: BorderRadius.circular(size * 0.2),
-                                          ),
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              IconButton(
-                                                padding: EdgeInsets.zero,
-                                                constraints: BoxConstraints(
-                                                  minWidth: size * 0.6,
-                                                  minHeight: size * 0.6,
-                                                ),
-                                                icon: AnimatedSwitcher(
-                                                  duration: const Duration(milliseconds: 300),
-                                                  transitionBuilder: (Widget child, Animation<double> animation) {
-                                                    return ScaleTransition(scale: animation, child: child);
-                                                  },
-                                                  child: Icon(
-                                                    card["isUpvoted"] ? Icons.rocket_launch : Icons.rocket_launch_outlined,
-                                                    key: ValueKey<bool>(card["isUpvoted"]),
-                                                    color: card["isUpvoted"] ? Colors.green : Colors.white,
-                                                    size: size * 0.4,
-                                                  ),
-                                                ),
-                                                onPressed: () => toggleVote(index),
-                                              ),
-                                              Text(
-                                                "${card["upvotes"]}",
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: size * 0.25,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                    )
-                                  ],
+                                  ),
                                 ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  card['description']!,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(fontSize: 12),
-                                ),
-                              ],
-                            ),
-                          ),
+                              ),
+                            );
+                          },
                         );
                       },
                     ),
@@ -597,15 +506,16 @@ void initState() {
             ),
           ),
           bottomNavigationBar: BottomAppBar(
+            color: kCardBackgroundColor,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
-                  icon: const Icon(Icons.arrow_back),
+                  icon: const Icon(Icons.arrow_back, color: kTextColor),
                   onPressed: () => Navigator.pop(context),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.arrow_forward),
+                  icon: const Icon(Icons.arrow_forward, color: kTextColor),
                   onPressed: () => Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const PageThree()),
@@ -616,6 +526,31 @@ void initState() {
           ),
         );
       },
+    );
+  }
+
+  Widget _buildStatItem(
+      {required IconData icon, required String value, required String label}) {
+    return Column(
+      children: [
+        Icon(icon, size: 16, color: kPrimaryColor),
+        const SizedBox(height: 4),
+        Text(
+          value,
+          style: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+            color: kTextColor,
+          ),
+        ),
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 10,
+            color: kTextColor.withOpacity(0.8),
+          ),
+        ),
+      ],
     );
   }
 }
