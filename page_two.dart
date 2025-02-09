@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'page_three.dart';
 import 'page_four.dart';
+import 'project_details_dialog.dart';
 
 const kPrimaryColor = Color(0xFF2196F3); // Vibrant yet calming blue
 const kBackgroundColor = Color(0xFF121212); // Dark charcoal for contrast
@@ -360,136 +361,148 @@ class _PageTwoState extends State<PageTwo> {
                           itemCount: getFilteredCards().length,
                           itemBuilder: (context, index) {
                             final card = getFilteredCards()[index];
-                            return Card(
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Container(
-                                decoration: BoxDecoration(
+                            return GestureDetector(
+                              onTap:() {
+                              showDialog(
+                                context: context,
+                                barrierColor: Colors.black.withOpacity(0.5), // Creates background blur effect
+                                builder: (context) => ProjectDetailsDialog(project: card,
+                                    index: index,
+                                    onUpvote: toggleVote),
+
+                              );
+                              },
+                              child: Card(
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20),
-                                  color: kCardBackgroundColor,
-                                  border: Border.all(
-                                    color: kPrimaryColor.withOpacity(0.2),
-                                    width: 1,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: kPrimaryColor.withOpacity(0.1),
-                                      blurRadius: 10,
-                                      spreadRadius: 2,
-                                      offset: const Offset(0, 4),
-                                    ),
-                                  ],
                                 ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: BackdropFilter(
-                                    filter:
-                                    ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(16),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            height: 120,
-                                            width: double.infinity,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                              BorderRadius.circular(12),
-                                              image: DecorationImage(
-                                                image: NetworkImage("${card['image']}"),
-                                                fit: BoxFit.cover,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: kCardBackgroundColor,
+                                    border: Border.all(
+                                      color: kPrimaryColor.withOpacity(0.2),
+                                      width: 1,
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: kPrimaryColor.withOpacity(0.1),
+                                        blurRadius: 10,
+                                        spreadRadius: 2,
+                                        offset: const Offset(0, 4),
+                                      ),
+                                    ],
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: BackdropFilter(
+                                      filter:
+                                      ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(16),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              height: 120,
+                                              width: double.infinity,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                BorderRadius.circular(12),
+                                                image: DecorationImage(
+                                                  image: NetworkImage("${card['image']}"),
+                                                  fit: BoxFit.cover,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          const SizedBox(height: 12),
-                                          Text(
-                                            card['title']!,
-                                            style: const TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold,
-                                              color: kTextColor,
+                                            const SizedBox(height: 12),
+                                            Text(
+                                              card['title']!,
+                                              style: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                                color: kTextColor,
+                                              ),
                                             ),
-                                          ),
-                                          const SizedBox(height: 4),
-                                          Text(
-                                            "By ${card['creator']!}",
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              color: kTextColor.withOpacity(0.9),
+                                            const SizedBox(height: 4),
+                                            Text(
+                                              "By ${card['creator']!}",
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color: kTextColor.withOpacity(0.9),
+                                              ),
                                             ),
-                                          ),
-                                          const SizedBox(height: 8),
-                                          Text(
-                                            card['description']!,
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              color: kTextColor.withOpacity(0.9),
+                                            const SizedBox(height: 8),
+                                            Text(
+                                              card['description']!,
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color: kTextColor.withOpacity(0.9),
+                                              ),
                                             ),
-                                          ),
-                                          const SizedBox(height: 12),
-                                          Row(
-                                            mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                            children: [
-                                                            GestureDetector(
-                                                            onTap: () => toggleVote(index), // Call the toggle function
-                                                  child: Container(
-                                                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.transparent, // Transparent background
-                                                      borderRadius: BorderRadius.circular(20),
-                                                      border: Border.all(
-                                                        color: Colors.white.withOpacity(0.5), // Light border
-                                                        width: 1,
+                                            const SizedBox(height: 12),
+                                            Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                              GestureDetector(
+                                                              onTap: () => toggleVote(index), // Call the toggle function
+                                                    child: Container(
+                                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.transparent, // Transparent background
+                                                        borderRadius: BorderRadius.circular(20),
+                                                        border: Border.all(
+                                                          color: Colors.white.withOpacity(0.5), // Light border
+                                                          width: 1,
+                                                        ),
+                                                      ),
+                                                      child: Row(
+                                                        mainAxisSize: MainAxisSize.min,
+                                                        children: [
+                                                          AnimatedSwitcher(
+                                                            duration: const Duration(milliseconds: 300),
+                                                            transitionBuilder: (Widget child, Animation<double> animation) {
+                                                              return ScaleTransition(scale: animation, child: child);
+                                                            },
+                                                            child: Icon(
+                                                              card["isUpvoted"] ? Icons.thumb_up : Icons.thumb_up_outlined,
+                                                              key: ValueKey<bool>(card["isUpvoted"]),
+                                                              color: card["isUpvoted"] ? Colors.green : Colors.white,
+                                                              size: 16,
+                                                            ),
+                                                          ),
+                                                          const SizedBox(width: 4),
+                                                          Text(
+                                                            "${card["upvotes"]}",
+                                                            style: TextStyle(
+                                                              fontSize: 14,
+                                                              fontWeight: FontWeight.bold,
+                                                              color: card["isUpvoted"] ? Colors.green : Colors.white,
+                                                            ),
+                                                          ),
+                                                        ],
                                                       ),
                                                     ),
-                                                    child: Row(
-                                                      mainAxisSize: MainAxisSize.min,
-                                                      children: [
-                                                        AnimatedSwitcher(
-                                                          duration: const Duration(milliseconds: 300),
-                                                          transitionBuilder: (Widget child, Animation<double> animation) {
-                                                            return ScaleTransition(scale: animation, child: child);
-                                                          },
-                                                          child: Icon(
-                                                            card["isUpvoted"] ? Icons.thumb_up : Icons.thumb_up_outlined,
-                                                            key: ValueKey<bool>(card["isUpvoted"]),
-                                                            color: card["isUpvoted"] ? Colors.green : Colors.white,
-                                                            size: 16,
-                                                          ),
-                                                        ),
-                                                        const SizedBox(width: 4),
-                                                        Text(
-                                                          "${card["upvotes"]}",
-                                                          style: TextStyle(
-                                                            fontSize: 14,
-                                                            fontWeight: FontWeight.bold,
-                                                            color: card["isUpvoted"] ? Colors.green : Colors.white,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
                                                   ),
+                                                _buildStatItem(
+                                                  icon: Icons.monetization_on,
+                                                  value: "${card['funds']} XTZ",
+                                                  label: "Funds Raised",
                                                 ),
-                                              _buildStatItem(
-                                                icon: Icons.monetization_on,
-                                                value: "${card['funds']} XTZ",
-                                                label: "Funds Raised",
-                                              ),
-                                              _buildStatItem(
-                                                icon: Icons.leaderboard,
-                                                value: "#${card['position']}",
-                                                label: "Rank",
-                                              ),
-                                            ],
-                                          ),
-                                        ],
+                                                _buildStatItem(
+                                                  icon: Icons.leaderboard,
+                                                  value: "#${card['position']}",
+                                                  label: "Rank",
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
