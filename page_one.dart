@@ -4,12 +4,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'page_two.dart';
 
 // Theme Colors (Updated)
-const kPrimaryColor = Color(0xFF1E3A8A); // Deep Sapphire Blue
-const kBackgroundColor = Color(0xFF0A0A0A); // Darkest Shade
-const kCardBackgroundColor = Color(0xFF1E1E1E); // Soft Dark Gray
-const kTextColor = Color(0xFFEAEAEA); // Off-White for Readability
-const kSecondaryTextColor = Color(0xFFB0B0B0); // Subtle Gray
-const kBorderColor = Color(0xFF2C2C2C); // Gentle Borders
+const kPrimaryColor = Color(0xFF102A5C); // Dark Midnight Blue
+const kBackgroundColor = Color(0xFF0A0A0A); // Darkest shade
+const kCardBackgroundColor = Color(0xFF1E1E1E); // Soft dark gray
+const kTextColor = Color(0xFFEAEAEA); // Off-white for readability
+const kSecondaryTextColor = Color(0xFFB0B0B0); // Subtle gray
+const kBorderColor = Color(0xFF2C2C2C); // Gentle borders
 
 class PageOne extends StatefulWidget {
   const PageOne({Key? key}) : super(key: key);
@@ -31,17 +31,19 @@ class _PageOneState extends State<PageOne> {
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+          gradient: RadialGradient(
+            center: Alignment(-0.4, -0.6), // Soft glow position
+            radius: 1.4,
             colors: [
-              Color(0xFF131A2D), // Deep Sapphire Blue Hint
-              Color(0xFF0A0E18), // Dark Navy
-              kBackgroundColor, // Black for Depth
+              Color(0xFF04619F), // *Deep Cyan-Blue (Vibrant but not too bright)*
+              Color(0xFF3D2C8D), // *Subtle Purple (Adds richness)*
+              Color(0xFF1B1F3B), // *Deep Navy Blue (Strong base)*
+              Color(0xFF0A0A0A), // *Vintage Black (Dark & elegant)*
             ],
-            stops: [0.1, 0.5, 1.0],
+            stops: [0.1, 0.3, 0.7, 1.0],
           ),
         ),
+
         child: Center(
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(24),

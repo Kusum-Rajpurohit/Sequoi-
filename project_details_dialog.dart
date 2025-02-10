@@ -1,6 +1,7 @@
 // project_details_dialog.dart
 
 import 'dart:ui';
+import 'package:felcon/pages/project_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -45,16 +46,7 @@ class ProjectDetailsDialog extends StatelessWidget {
     // Additional project details
     final projectDetails = {
       ...project,
-      'token_image': project['image'], // Using the same image for now
-      'status': project['category'] == 'Productivity' ? 'Active' : 'In Progress',
-      'launch_date': DateTime.now().subtract(const Duration(days: 30)),
-      'tags': ['#${project['category']}', '#Innovation', '#Technology'],
-      'detailed_description': '''${project['description']}
-
-Our team is dedicated to delivering innovative solutions that address real-world challenges. Through careful planning and agile development methodologies, we ensure that our project meets the highest standards of quality and user experience.
-
-Join us in revolutionizing ${project['category'].toLowerCase()} through cutting-edge technology and user-centric design.''',
-    };
+      };
 
     return Dialog(
       backgroundColor: Colors.transparent,
@@ -82,7 +74,7 @@ Join us in revolutionizing ${project['category'].toLowerCase()} through cutting-
               Expanded(
                 flex: 5,
                 child: Container(
-                  color: Colors.black26,
+                  color: Colors.white24,
                   child: Image.network(
                     projectDetails['token_image'],
                     fit: BoxFit.cover,
@@ -177,7 +169,7 @@ Join us in revolutionizing ${project['category'].toLowerCase()} through cutting-
                             children: [
                               Expanded(
                                 child: _buildStatCard(
-                                  icon: Icons.thumb_up,
+                                  icon: Icons.rocket_launch,
                                   value: "${project['upvotes']}",
                                   label: "Upvotes",
                                   isUpvoted: project['isUpvoted'],
@@ -241,6 +233,41 @@ Join us in revolutionizing ${project['category'].toLowerCase()} through cutting-
                                 ),
                               );
                             }).toList(),
+                          ),
+                          const SizedBox(height: 24),
+
+                          // CTA Button
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ProjectDetailsPage(
+                                      project: project,
+                                      onUpvote: onUpvote,
+                                      index: index,
+                                    ),
+                                  ),
+                                );
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: kPrimaryColor,
+                                padding: const EdgeInsets.symmetric(vertical: 16),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                              ),
+                              child: const Text(
+                                "More Details",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: kTextColor,
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -325,7 +352,7 @@ Join us in revolutionizing ${project['category'].toLowerCase()} through cutting-
             TextButton.icon(
               onPressed: onPressed,
               icon: Icon(
-                isUpvoted ? Icons.thumb_up : Icons.thumb_up_outlined,
+                project['isUpvoted'] ? Icons.rocket_launch : Icons.rocket_launch_outlined,
                 size: 16,
                 color: isUpvoted ? Colors.green : kPrimaryColor,
               ),
